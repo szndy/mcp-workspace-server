@@ -28,11 +28,7 @@ function tokenFromRequest(req: Request): string | undefined {
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_FAILURES = 20;
 
-/**
- * Accepts a token as "Authorization: Bearer ..." or as the last path segment
- * (/mcp/<token>), because some MCP clients can only be given a URL.
- * Repeated failures from one address are blocked for a while.
- */
+/** Token comes from the Bearer header or the /mcp/<token> path, since some clients only accept a URL. */
 export function authMiddleware(config: Config) {
   const failures = new Map<string, { count: number; since: number }>();
 

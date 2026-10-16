@@ -152,7 +152,7 @@ export class MasterlistStore {
     });
   }
 
-  /** Add a student. Appends unless position (1-based) is given. Returns the new record. */
+  /** Appends unless position (1-based) is given. */
   add(input: NewStudent, position?: number): Promise<Student> {
     return this.mutate((students) => {
       const clean = cleanStudent(input);

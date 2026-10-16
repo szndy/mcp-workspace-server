@@ -11,8 +11,7 @@ export interface AuditEntry {
   error?: string;
 }
 
-// Values of these arguments are replaced by their length so the log never holds
-// file contents or student details.
+// Logged as their length only, so the log holds no file contents or student details.
 const REDACTED_KEYS = new Set([
   'content',
   'old_str',

@@ -29,10 +29,7 @@ function nearestExisting(p: string): string {
   return current;
 }
 
-/**
- * Turn a user supplied relative path into an absolute path that is guaranteed to
- * stay inside `root`. Throws ToolError for anything that tries to leave it.
- */
+/** Resolves a user path to an absolute path inside `root`; throws ToolError if it would leave it. */
 export function resolveInRoot(root: string, userPath: string): string {
   if (typeof userPath !== 'string') throw new ToolError('path must be a string.');
   if (userPath.length > MAX_PATH_LENGTH) throw new ToolError('path is too long.');
