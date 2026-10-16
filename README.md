@@ -41,7 +41,7 @@ Masterlist tools only appear when `MASTERLIST_PATH` is set.
 
 - Node.js 20 or newer
 - git 2.31 or newer on the PATH
-- An [ngrok](https://ngrok.com) account (free) for the public URL
+- An [ngrok](https://ngrok.com) account (free) and the ngrok agent for the public URL, for example `winget install ngrok.ngrok` on Windows
 - pm2 (`npm install -g pm2`) to keep it running
 
 ## Setup
@@ -86,10 +86,12 @@ npx @modelcontextprotocol/inspector     # connect to http://127.0.0.1:3000/mcp/<
 
 ```bash
 ngrok config add-authtoken <your ngrok token>
-ngrok http --url=<your-domain>.ngrok-free.app 3000
+ngrok http --url=<your-domain> 3000
 ```
 
-Clients connect to `https://<your-domain>.ngrok-free.app/mcp/<token>`. The token can also be sent as an `Authorization: Bearer <token>` header; the path form exists for clients that only accept a URL.
+A free ngrok account gets one static domain with a generated name ending in `.ngrok-free.dev`. It is shown under Domains in the ngrok dashboard. Choosing your own name needs a paid plan.
+
+Clients connect to `https://<your-domain>/mcp/<token>`. The token can also be sent as an `Authorization: Bearer <token>` header; the path form exists for clients that only accept a URL.
 
 ### Keep it running (pm2)
 
@@ -99,7 +101,18 @@ pm2 status
 pm2 logs mcp-server
 ```
 
-If `NGROK_DOMAIN` is set in `.env`, pm2 also starts and restarts the tunnel.
+If `NGROK_DOMAIN` is set in `.env`, pm2 also starts and restarts the tunnel. Do not also start the tunnel by hand: a domain can only have one tunnel, and a second one fails with `ERR_NGROK_334` ("endpoint is already online").
+
+## Connect Claude
+
+In Claude, open Settings, then Connectors, then Add custom connector.
+
+- Admin connector: URL `https://<your-domain>/mcp/<ADMIN_TOKEN>`
+- Read-only connector (optional, second connector): URL `https://<your-domain>/mcp/<READER_TOKEN>`
+
+Leave the OAuth fields empty. Claude will say no sign-in is detected. This is expected: the token in the URL is the only protection, so keep the URL private.
+
+The admin connector lists 21 tools when `MASTERLIST_PATH` is set. The reader connector lists 14. In the admin connector's tool permissions, set the 7 write and delete tools to "needs approval" and the 14 read-only tools to "always allow".
 
 ## Handoff files
 
@@ -114,12 +127,12 @@ CHECKPOINTS/0001-*.md what the last session finished, and what is next
 
 A new session starts with `handoff_read` and ends with a checkpoint written by `handoff_log`.
 
-Full documentation (design, security, testing, demo evidence) is in `docs/Documentation.docx`.
+The demo transcripts, handoff files and a log excerpt are in `docs/evidence/`.
 
 ## Security
 
 - Every path is resolved against `WORKSPACE_ROOT`; `..`, absolute and drive paths, `:` streams, reserved Windows names and symlinks that leave the root are rejected. `.git` and `.env*` are never readable or writable.
-- Every request needs a token (constant-time comparison); repeated failures from one address are blocked for 10 minutes. The server only listens on 127.0.0.1, so it is reachable from outside only through the tunnel.
+- Every request needs a token (constant-time comparison); after 20 failed attempts from one address within 10 minutes, that address gets 429 until the window passes. The server only listens on 127.0.0.1, so it is reachable from outside only through the tunnel.
 - Two roles: the reader token only gets read-only tools.
 - Destructive tools need `confirm: true`. Deleted files go to `.trash`; the masterlist is copied to `BACKUP_DIR` before each change.
 - Every tool call is appended to `logs/tool-calls.jsonl`. File contents and student details are replaced by their length.
@@ -146,6 +159,12 @@ src/
   handoff.ts                    handoff file helpers
   tools/                        tool definitions, one file per group
 tests/
-docs/                           project documentation (Documentation.docx)
+docs/evidence/                  demo transcripts, handoff files, log excerpt
 sample-data/                    fake masterlist for trying things out
 ```
+
+## Troubleshooting
+
+- **Windows paths in `.env`:** wrap the value in single quotes when the path contains spaces, brackets or `#`. Without quotes a `#` starts a comment.
+- **"endpoint is already online" (`ERR_NGROK_334`):** another ngrok is running for the same domain. Stop it and let pm2 own the tunnel.
+- **`npm install` fails with `EBUSY` or `EPERM` on Windows:** this is usually antivirus scanning new files. Retry with a fresh cache: `npm install --cache <new-folder>`.
