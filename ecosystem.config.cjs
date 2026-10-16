@@ -1,4 +1,4 @@
-// pm2 process file. Start with:  pm2 start ecosystem.config.cjs
+// Start with: pm2 start ecosystem.config.cjs
 const path = require('node:path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
@@ -20,7 +20,7 @@ const apps = [
   },
 ];
 
-// Optional: keep the tunnel alive too. Skipped when NGROK_DOMAIN is empty.
+// The tunnel is only managed when NGROK_DOMAIN is set.
 if (domain) {
   apps.push({
     name: 'mcp-tunnel',
