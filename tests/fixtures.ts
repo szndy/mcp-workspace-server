@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import ExcelJS from 'exceljs';
 
-/** Builds a masterlist workbook with the same layout as the real one, filled with obviously fake data. */
+/** Writes a masterlist workbook with made-up data. */
 export async function writeSampleMasterlist(file: string, count = 12): Promise<void> {
   const wb = new ExcelJS.Workbook();
   const ws = wb.addWorksheet('Sheet1');

@@ -17,7 +17,7 @@ describe('git and project tools', async () => {
   const { ctx, workspaceRoot } = await makeCtx();
   const run = (name: string, args: Record<string, unknown>) => tool(ctx, name).run(args, ctx);
 
-  // Layout like the real PC: a repo plus sibling worktrees nested in a folder, and a plain repo at the top.
+  // A repo with sibling worktrees in a folder, and a plain repo at the top.
   const main = path.join(workspaceRoot, 'Project Management', 'BotikAh! PH');
   fs.mkdirSync(main, { recursive: true });
   sh(main, 'init', '-q', '-b', 'main');
