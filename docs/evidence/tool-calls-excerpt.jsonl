@@ -1,0 +1,22 @@
+{"ts":"2026-10-16T08:02:12.993Z","role":"admin","tool":"list_repos","args":{},"ok":true,"ms":1591}
+{"ts":"2026-10-16T08:03:24.663Z","role":"admin","tool":"read_file","args":{"path":"../x","offset":0,"limit":8000},"ok":false,"ms":0,"error":"Path escapes the workspace root."}
+{"ts":"2026-10-16T17:22:13.311Z","role":"admin","tool":"list_repos","args":{},"ok":true,"ms":765}
+{"ts":"2026-10-16T17:22:50.207Z","role":"admin","tool":"project_summary","args":{"project":"BotikAh"},"ok":true,"ms":1363}
+{"ts":"2026-10-16T17:24:33.972Z","role":"admin","tool":"handoff_init","args":{"project":"BotikAh"},"ok":true,"ms":582}
+{"ts":"2026-10-16T17:24:36.990Z","role":"admin","tool":"read_file","args":{"path":".handoff/botikah-ph/PROJECT_STATE.md","offset":0,"limit":8000},"ok":true,"ms":3}
+{"ts":"2026-10-16T17:24:44.892Z","role":"admin","tool":"write_file","args":{"path":".handoff/botikah-ph/PROJECT_STATE.md","content":"[1658 chars]","if_version":"e11ac0f84e0c"},"ok":true,"ms":2}
+{"ts":"2026-10-16T17:26:57.235Z","role":"admin","tool":"handoff_log","args":{"project":"BotikAh","kind":"plan","title":"Review and merge Dependabot PRs #148, #149","body":"[366 chars]"},"ok":true,"ms":592}
+{"ts":"2026-10-16T17:27:02.560Z","role":"admin","tool":"handoff_log","args":{"project":"BotikAh","kind":"checkpoint","title":"Handoff setup and status review session","body":"[887 chars]"},"ok":true,"ms":1}
+{"ts":"2026-10-16T17:29:46.034Z","role":"reader","tool":"handoff_read","args":{"project":"BotikAh! PH"},"ok":true,"ms":587}
+{"ts":"2026-10-16T17:36:59.918Z","role":"admin","tool":"write_file","args":{"path":"_demo/Demo.txt","content":"[14 chars]"},"ok":true,"ms":1}
+{"ts":"2026-10-16T17:38:01.424Z","role":"admin","tool":"str_replace","args":{"path":"_demo/Demo.txt","old_str":"[14 chars]","new_str":"[34 chars]","if_version":"993c2f49416e"},"ok":true,"ms":2}
+{"ts":"2026-10-16T17:38:41.852Z","role":"admin","tool":"delete_file","args":{"path":"_demo/Demo.txt","confirm":true},"ok":true,"ms":1}
+{"ts":"2026-10-16T17:40:57.102Z","role":"admin","tool":"masterlist_count","args":{},"ok":true,"ms":90}
+{"ts":"2026-10-16T17:40:58.612Z","role":"admin","tool":"masterlist_get","args":{"number":6},"ok":true,"ms":16}
+{"ts":"2026-10-16T17:41:34.460Z","role":"admin","tool":"masterlist_add","args":{"tupm_id":"[12 chars]","last_name":"[4 chars]","first_name":"[4 chars]","middle_name":"[0 chars]"},"ok":true,"ms":87}
+{"ts":"2026-10-16T17:42:18.241Z","role":"admin","tool":"masterlist_remove","args":{"number":44,"tupm_id":"[12 chars]","confirm":true},"ok":true,"ms":35}
+{"ts":"2026-10-16T17:42:41.833Z","role":"admin","tool":"masterlist_count","args":{},"ok":true,"ms":10}
+{"ts":"2026-10-16T17:45:39.176Z","role":"admin","tool":"masterlist_count","args":{},"ok":true,"ms":59}
+{"ts":"2026-10-16T17:47:50.755Z","role":"admin","tool":"write_file","args":{"path":"_demo/dup.txt","content":"[11 chars]"},"ok":true,"ms":1}
+{"ts":"2026-10-16T17:47:58.574Z","role":"admin","tool":"str_replace","args":{"path":"_demo/dup.txt","old_str":"[5 chars]","new_str":"[3 chars]","if_version":"20d0bfe91d80"},"ok":false,"ms":2,"error":"old_str appears more than once in _demo/dup.txt. Add surrounding text so it matches exactly once."}
+{"ts":"2026-10-16T17:54:29.708Z","role":"admin","tool":"masterlist_count","args":{},"ok":true,"ms":54}
